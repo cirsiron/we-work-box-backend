@@ -1,32 +1,26 @@
-const app = require('koa')()
+const Koa = require('koa')
 const logger = require('koa-logger')
 const json = require('koa-json')
-const views = require('koa-views')
 const onerror = require('koa-onerror')
-const koaStatic = require('koa-static')
+const bodyParser = require('koa-bodyparser')
+const cors = require('koa2-cors')
 const routers = require('./api')
 
+const app = new Koa();
 // error handler
 onerror(app);
 
-// global middlewares
-app.use(views('views', {
-  root: __dirname + '/views',
-  default: 'jade'
-}));
-app.use(require('koa-bodyparser')());
+app.use(cors());
+app.use(bodyParser());
 app.use(json());
 app.use(logger());
 
-app.use(function *(next){
-  var start = new Date;
-  yield next;
-  var ms = new Date - start;
-  console.log('%s %s - %s', this.method, this.url, ms);
+app.use(async (ctx, next) => {
+  const start = Date.now();
+  await next();
+  const ms = Date.now() - start;
+  console.log(`${ctx.method} ${ctx.url} - ${ms}`);
 });
-
-app.use(koaStatic(__dirname + '/public'));
-
 // 初始化路由中间件
 app.use(routers.routes()).use(routers.allowedMethods())
 

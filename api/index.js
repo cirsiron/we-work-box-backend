@@ -1,9 +1,7 @@
-const router = require('koa-router')();
-const home = require('./home')
-const users = require('./users')
+const Router = require('@koa/router');
+const router = new Router();
+const cards = require('./cards');
 
 // routes definition
-router.use('/', home.routes(), home.allowedMethods());
-router.use('/users', users.routes(), users.allowedMethods());
-
+router.use('/api', cards.routes(), cards.allowedMethods());
 module.exports = router;
