@@ -6,6 +6,14 @@ const { resetRes } = defaultData
 module.exports = function (client) {
   return {
     async add (card = {}) {
+      const { name, type, content } = card
+      if (!name || !type || !content) {
+        return {
+          code: 1,
+          message: '缺少参数',
+          data: null
+        }
+      }
       let { message, code, data } = resetRes()
       try {
         await client.index({
@@ -46,6 +54,7 @@ module.exports = function (client) {
     },
     async modify (id, card = {}) {
       let { message, code, data } = resetRes()
+      console.log(id)
       try {
         data = await client.index({
           index: INDEX_NAME,
@@ -62,7 +71,7 @@ module.exports = function (client) {
       return {
         code,
         message,
-        data: (data && data.body) ? data.body.hits.hits : null
+        data: null
       }
     },
     async query (q) {
@@ -72,8 +81,10 @@ module.exports = function (client) {
           data = await client.search({
             index: INDEX_NAME,
             size: 30,
-            analyzer: 'ik_max_word',
-            q
+            q: `*${q}*`
+          }, {
+            ignore: [404],
+            maxRetries: 2
           })
         } else {
           data = await client.search({

@@ -18,8 +18,8 @@ router.get('/remove', async (ctx) => {
   const res = await remove(id)
   ctx.body = res
 })
-router.get('/modify', async (ctx) => {
-  const { id, card } = ctx.request.query
+router.post('/modify', async (ctx) => {
+  const { id, card } = ctx.request.body
   const res = await modify(id, card)
   ctx.body = res
 })
