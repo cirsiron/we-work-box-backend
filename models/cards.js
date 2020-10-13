@@ -11,6 +11,7 @@ module.exports = function (client) {
         await client.index({
           index: INDEX_NAME,
           body: {
+            create_date: +new Date(),
             ...card
           }
         })
@@ -50,6 +51,7 @@ module.exports = function (client) {
           index: INDEX_NAME,
           id,
           body: {
+            modify_date: +new Date(),
             ...card
           }
         })
@@ -70,6 +72,7 @@ module.exports = function (client) {
           data = await client.search({
             index: INDEX_NAME,
             size: 30,
+            analyzer: 'ik_max_word',
             q
           })
         } else {

@@ -8,17 +8,8 @@ const router = new Router({
 const { add, remove, modify, query } = cardControllers.cards
 
 router.post('/add', async (ctx) => {
-  const  {
-    name = 'card',
-    content = '史蒂夫',
-    link = 'http://baidu.com',
-    type = 1
-  } = ctx.request.body
   const res = await add({
-    name,
-    content,
-    link,
-    type
+    ...ctx.request.body
   })
   ctx.body = res
 })
