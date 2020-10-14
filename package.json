@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node bin/www",
-    "dev": "./node_modules/.bin/nodemon bin/www",
-    "prod": "pm2 start bin/www --name='work-backend' --watch",
+    "dev": "cross-env API_HOST=http://127.0.0.1 ./node_modules/.bin/nodemon bin/www",
+    "prod": "cross-env API_HOST=http://192.168.99.115  pm2 start bin/www --name='work-backend' --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -23,6 +23,7 @@
     "koa2-cors": "^2.0.6"
   },
   "devDependencies": {
+    "cross-env": "^7.0.2",
     "nodemon": "^1.8.1"
   }
 }

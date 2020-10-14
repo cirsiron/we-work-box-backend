@@ -2,7 +2,7 @@
 const { Client } = require('@elastic/elasticsearch')
 const { db, requestTimeout } = require('../config')
 
-const { HOST, PORT, REQUEST_TIMEOUT } = db
+const { HOST, PORT } = db
 const client = new Client({
   node: `${HOST}:${PORT}`
 })
