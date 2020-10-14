@@ -54,14 +54,15 @@ module.exports = function (client) {
     },
     async modify (id, card = {}) {
       let { message, code, data } = resetRes()
-      console.log(id)
       try {
-        data = await client.index({
+        data = await client.update({
           index: INDEX_NAME,
           id,
           body: {
-            modify_date: +new Date(),
-            ...card
+            doc: {
+              modify_date: +new Date(),
+              ...card
+            }
           }
         })
       } catch (e) {

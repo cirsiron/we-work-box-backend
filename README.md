@@ -9,3 +9,12 @@
 ├── utils/  # 工具类目录
 └── views/  # 模板目录
 ```
+
+
+### 数据同步
+
+```bash
+cnpm install elasticdump
+cd node_modules/elasticdump/bin
+./elasticdump  --input=http://127.0.0.1:9200/cards --output=http://192.168.99.115:9200/cards --type=data
+```
