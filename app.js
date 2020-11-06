@@ -10,7 +10,10 @@ const app = new Koa();
 // error handler
 onerror(app);
 
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  credentials: true
+}));
 app.use(bodyParser());
 app.use(json());
 app.use(logger());
